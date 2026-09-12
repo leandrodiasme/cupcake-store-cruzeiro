@@ -38,8 +38,9 @@
    - Customização White-Label (nome, nicho, horário, WhatsApp e paleta de cores primárias).
 
 5. **Documentação e Requisitos Acadêmicos:**
-   - [Dicionário de Dados Completo](docs/DICIONARIO_DE_DADOS.md).
-   - [Relatório de Validação por Pares (5 Usuários)](docs/FEEDBACK_VALIDACAO.md).
+   - [📄 Manual de Uso do Sistema (PDF Oficial)](MANUAL_DO_USUARIO.pdf) | [Versão Web/Markdown](docs/MANUAL_DO_USUARIO.md)
+   - [Dicionário de Dados Completo](docs/DICIONARIO_DE_DADOS.md)
+   - [Relatório de Validação por Pares (5 Usuários)](docs/FEEDBACK_VALIDACAO.md)
 
 ---
 
