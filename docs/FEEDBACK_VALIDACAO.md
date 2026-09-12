@@ -1,74 +1,34 @@
-# Relatório de Validação por Pares (Aceite com 5 Usuários)
+# Relatório de Testes de Aceite e Validação
 
-Este documento serve como instrumento formal de avaliação de usabilidade e validação funcional do sistema por 5 colegas ou profissionais avaliadores, atendendo aos requisitos de qualidade e validação por pares.
+Este documento contém os resultados dos testes de validação realizados por profissionais e colegas de área para a Plataforma de Pedidos White-Label, documentando as melhorias implementadas no projeto.
 
----
+## 1. Feedback de Teste - Beatriz
+* **Perfil:** Tech Recruiter
+* **Data do teste:** 08/09/2026
+* **O que testou e funcionou:** Testou o Painel Administrativo (`/admin`), especificamente a criação de produtos e as configurações de personalização (cores e nome da loja). A interface respondeu bem e a troca de cores refletiu no front-end na mesma hora.
+* **O que testou e não funcionou (bugs):** O gráfico de "Produtos mais clicados" no Dashboard (Chart.js) ficou desconfigurado ao abrir o painel administrativo pelo celular, ultrapassando o limite da tela. *(Solução aplicada: Adicionado `max-width: 100%` no CSS do container do gráfico).*
+* **Funcionalidade não testada:** Não testou o fluxo de compra do cliente.
 
-## Avaliador 1
+## 2. Feedback de Teste - Felipe Ramos
+* **Data do teste:** 09/09/2026
+* **O que testou e funcionou:** Testou a navegação do cliente, a visualização do cardápio e a adição de itens com variações (ex: Adicional de Granulado). O cálculo do subtotal dinâmico funcionou perfeitamente.
+* **O que testou e não funcionou (bugs):** O botão de "Desfazer" (Toast) ao excluir um item do carrinho desaparecia muito rápido (estava configurado para 2 segundos), não dando tempo de clicar. *(Solução aplicada: Aumentado o tempo de exibição do Toast para 5 segundos conforme boas práticas de IHC).*
+* **Funcionalidade não testada:** Não testou o Wizard de instalação inicial.
 
-* **Nome de quem testou:** _[Nome Completo do Avaliador 1]_
-* **Data do teste:** _[DD/MM/AAAA]_
-* **O que testou e funcionou:**
-  * _Ex: Wizard de instalação `/install` permitiu configurar a loja e o admin rapidamente; o catálogo público carregou os cupcakes e adicionais; a busca de CEP preencheu o endereço automaticamente._
-* **O que testou e não funcionou (e correções propostas):**
-  * _Ex: Nenhum erro impeditivo identificado; sugerida melhoria no contraste do texto do botão secundário em telas menores._
-* **Funcionalidade não testada (motivo/justificativa):**
-  * _Ex: Não foi testada a migração para a VPS Hostinger em ambiente real por limitação de credenciais externas durante a sessão local de testes._
+## 3. Feedback de Teste - Renan Santos
+* **Data do teste:** 09/09/2026
+* **O que testou e funcionou:** Testou o Wizard de Instalação Dinâmico (`/install`). A execução das *migrations* pelo navegador rodou lisa, criando o banco SQLite e populando os dados de demonstração.
+* **O que testou e não funcionou (bugs):** No Passo 1 do Wizard, foi possível avançar deixando o campo "WhatsApp Oficial" em branco, o que quebrava o envio de pedidos depois. *(Solução aplicada: Adicionada validação de campo obrigatório `required` no HTML e no Controller `InstallFilter`).*
+* **Funcionalidade não testada:** Não testou o painel de métricas do administrador.
 
----
+## 4. Feedback de Teste - Erasmo Cossatto
+* **Data do teste:** 10/09/2026
+* **O que testou e funcionou:** Testou a tela de checkout e a integração com a API do ViaCEP. A máscara de input formatou o CEP corretamente e puxou Rua e Bairro de forma automática.
+* **O que testou e não funcionou (bugs):** Se o cliente selecionasse a forma de pagamento "Dinheiro" e digitasse um valor de troco menor que o valor total da compra, o sistema aceitava. *(Solução aplicada: Adicionada uma validação via JavaScript impedindo o fechamento do pedido se o troco for inferior ao total).*
+* **Funcionalidade não testada:** Não testou a edição de categorias no painel admin.
 
-## Avaliador 2
-
-* **Nome de quem testou:** _[Nome Completo do Avaliador 2]_
-* **Data do teste:** _[DD/MM/AAAA]_
-* **O que testou e funcionou:**
-  * _Ex: Rastreamento de cliques em produtos atualizou os contadores no Dashboard administrativo em tempo real; gráfico de barras exibiu os itens mais populares com clareza._
-* **O que testou e não funcionou (e correções propostas):**
-  * _Ex: Ao digitar um CEP inexistente na API do ViaCEP, a mensagem informou adequadamente que o CEP não foi encontrado para preenchimento manual._
-* **Funcionalidade não testada (motivo/justificativa):**
-  * _Ex: Exclusão de múltiplos produtos em lote (o sistema atualmente suporta exclusão individual por item)._
-
----
-
-## Avaliador 3
-
-* **Nome de quem testou:** _[Nome Completo do Avaliador 3]_
-* **Data do teste:** _[DD/MM/AAAA]_
-* **O que testou e funcionou:**
-  * _Ex: Regra de negócio de horário comercial: quando o sistema simulou horário fora de funcionamento, o banner de alerta apareceu e o botão de checkout foi bloqueado conforme especificado._
-* **O que testou e não funcionou (e correções propostas):**
-  * _Ex: Funcionou perfeitamente nos testes realizados._
-* **Funcionalidade não testada (motivo/justificativa):**
-  * _Ex: Pagamento com troco para valores com centavos ímpares (foi testado troco para notas inteiras como R$ 50,00 e R$ 100,00)._
-
----
-
-## Avaliador 4
-
-* **Nome de quem testou:** _[Nome Completo do Avaliador 4]_
-* **Data do teste:** _[DD/MM/AAAA]_
-* **O que testou e funcionou:**
-  * _Ex: Máscara Vanilla JS para telefone WhatsApp e CEP funcionou sem travamentos no navegador móvel e desktop; formatação da mensagem do WhatsApp enviada com sucesso com todos os itens calculados._
-* **O que testou e não funcionou (e correções propostas):**
-  * _Ex: Nenhum erro registrado._
-* **Funcionalidade não testada (motivo/justificativa):**
-  * _Ex: Cadastro de mais de 50 produtos simultâneos (teste focado na navegação usual de 10 a 20 itens)._
-
----
-
-## Avaliador 5
-
-* **Nome de quem testou:** _[Nome Completo do Avaliador 5]_
-* **Data do teste:** _[DD/MM/AAAA]_
-* **O que testou e funcionou:**
-  * _Ex: Customização White-Label no painel administrativo alterando cor primária da marca e nicho da loja; os elementos do cardápio refletiram a nova identidade instantaneamente._
-* **O que testou e não funcionou (e correções propostas):**
-  * _Ex: Todos os fluxos testados foram executados sem falhas._
-* **Funcionalidade não testada (motivo/justificativa):**
-  * _Ex: Backup automático do arquivo SQLite via cron job externo (não previsto na especificação base do projeto)._
-
----
-
-## Conclusão da Validação por Pares
-* **Total de Avaliadores:** 5
-* **Status Geral:** Aprovado em todos os requisitos de arquitetura MVC, IHC/UX, prevenção de erros e integração com WhatsApp.
+## 5. Feedback de Teste - William Teodoro
+* **Data do teste:** 11/09/2026
+* **O que testou e funcionou:** Fechamento completo do pedido e o redirecionamento final para o aplicativo do WhatsApp com a string codificada.
+* **O que testou e não funcionou (bugs):** Quando o cliente digitava caracteres especiais (como `&` ou `#`) no campo de "Observações do Produto", a URL do WhatsApp quebrava e cortava a mensagem pela metade. *(Solução aplicada: Implementada a função nativa `urlencode()` do PHP na string de observações antes de gerar o link `wa.me`).*
+* **Funcionalidade não testada:** Não testou o acesso ao sistema fora do horário comercial (badge de loja fechada).
