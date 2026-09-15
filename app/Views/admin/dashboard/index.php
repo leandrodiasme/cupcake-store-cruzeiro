@@ -266,8 +266,22 @@
         },
         options: {
             responsive: true,
+            layout: {
+                padding: {
+                    top: 10,
+                    right: 8,
+                    bottom: 4,
+                    left: 4
+                }
+            },
             plugins: {
-                legend: { display: false }
+                legend: {
+                    display: false,
+                    position: 'top'
+                },
+                tooltip: {
+                    position: 'nearest'
+                }
             },
             scales: {
                 y: {

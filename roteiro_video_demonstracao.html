@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roteiro do Vídeo - PIT</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent: #e0e7ff;
+        }
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background: var(--bg); 
+            color: var(--text-main); 
+            padding: 40px 20px; 
+            line-height: 1.6; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+        h1 { 
+            color: var(--primary); 
+            text-align: center; 
+            margin-bottom: 40px; 
+        }
+        .scene { 
+            background: var(--card); 
+            border-radius: 8px; 
+            padding: 25px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            border-left: 5px solid var(--primary); 
+        }
+        .time { 
+            display: inline-block; 
+            background: var(--accent); 
+            color: var(--primary); 
+            font-weight: bold; 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            font-size: 0.9em; 
+            margin-bottom: 15px; 
+        }
+        .title { 
+            font-size: 1.25em; 
+            font-weight: bold; 
+            margin: 0 0 15px 0; 
+            color: #334155; 
+        }
+        .action { 
+            color: var(--text-muted); 
+            font-style: italic; 
+            margin-bottom: 15px; 
+            padding: 10px; 
+            background: #f1f5f9; 
+            border-radius: 6px; 
+        }
+        .speech { 
+            margin: 0; 
+            font-size: 1.05em;
+        }
+        .speech strong { 
+            color: var(--primary); 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Roteiro do Vídeo de Demonstração</h1>
+
+        <div class="scene">
+            <div class="time">0:00 - 0:45</div>
+            <h3 class="title">Introdução e Contexto do Projeto</h3>
+            <div class="action">🎥 Ação: Comece com a câmera ligada mostrando seu rosto antes de compartilhar a tela.</div>
+            <p class="speech"><strong>🗣️ Fala:</strong> "Fala, pessoal! Olá, tutor e avaliadores. Meu nome é Leandro Pereira Dias, e este vídeo é a apresentação prática do meu Projeto Integrador Transdisciplinar em Engenharia de Software II. Eu desenvolvi uma Plataforma de Pedidos Online White-Label completa utilizando PHP 8 com o framework CodeIgniter 4, estruturada rigorosamente no padrão de arquitetura MVC. A ideia central do projeto foi criar uma solução reutilizável e adaptável: o mesmo código-fonte serve perfeitamente tanto para uma lanchonete de frango frito quanto para uma loja especializada em cupcakes, bastando parametrizar a identidade no início."</p>
+        </div>
+
+        <div class="scene">
+            <div class="time">0:45 - 1:45</div>
+            <h3 class="title">Arquitetura de Dados e Wizard Dinâmico</h3>
+            <div class="action">💻 Ação: Compartilhe a tela e abra o navegador na rota /install.</div>
+            <p class="speech"><strong>🗣️ Fala:</strong> "Entrando aqui na parte prática, o sistema conta com um filtro global de instalação. Se o banco de dados estiver zerado, ele intercepta qualquer tentativa de navegação e joga o usuário direto para este Wizard de 4 etapas. Aqui nós definimos o nome da loja, o segmento de atuação, o número do WhatsApp oficial e os horários de atendimento. Para desenvolvimento local, utilizei um banco leve em SQLite 3, mas toda a estrutura foi modelada via migrations do CodeIgniter. Isso significa que para publicar numa VPS na Hostinger rodando MySQL ou MariaDB, basta rodar o comando de migração sem mexer em nenhuma linha de código. Vou concluir a etapa do assistente para vocês verem ele criando as tabelas relacionais e já nos redirecionando para o painel."</p>
+        </div>
+
+        <div class="scene">
+            <div class="time">1:45 - 2:45</div>
+            <h3 class="title">Gestão Administrativa e Regras de Negócio</h3>
+            <div class="action">💻 Ação: Faça o login e navegue pelas telas do /admin.</div>
+            <p class="speech"><strong>🗣️ Fala:</strong> "Aqui dentro do painel restrito, temos a visão completa do lojista. O Dashboard exibe um gráfico interativo com Chart.js alimentado em tempo real por cliques, o que permite identificar com facilidade quais produtos estão despertando mais interesse nos clientes. Nós temos o CRUD de categorias, cadastro de produtos com adicionais e a tela de configurações White-Label. Nela, eu consigo trocar a cor primária da marca com um clique e ajustar os horários comerciais. Inclusive, uma regra de negócio essencial: se a loja estiver fora do expediente cadastrado, a aplicação bloqueia o checkout lá no front-end para evitar pedidos em horários indevidos."</p>
+        </div>
+
+        <div class="scene">
+            <div class="time">2:45 - 3:45</div>
+            <h3 class="title">Experiência do Consumidor e Checkout Inteligente</h3>
+            <div class="action">💻 Ação: Vá para a página inicial pública, adicione itens à sacola e abra o carrinho.</div>
+            <p class="speech"><strong>🗣️ Fala:</strong> "Agora, olhando pelo lado do cliente: a interface foi pensada para ser rápida e limpa. O usuário escolhe o produto, seleciona adicionais e o subtotal recalcula na hora. Seguindo boas práticas de IHC, a sacola tem ações reversíveis: se eu excluir um produto sem querer, o sistema me dá um aviso com botão de desfazer. Indo para o checkout, implementei uma máscara em JavaScript no campo de CEP. Quando o cliente digita os 8 dígitos, a API do ViaCEP busca rua, bairro e cidade de forma assíncrona, deixando o cursor direto no número. Ao escolher o pagamento e clicar em concluir, os dados são salvos no banco e o sistema gera uma mensagem limpa e estruturada, abrindo o WhatsApp oficial da loja prontinho para o envio."</p>
+        </div>
+
+        <div class="scene">
+            <div class="time">3:45 - 4:45</div>
+            <h3 class="title">Validação por Pares e Ciclo de Melhorias</h3>
+            <div class="action">💻 Ação: Mostre rapidamente o arquivo de testes ou a tela do sistema ajustada.</div>
+            <p class="speech"><strong>🗣️ Fala:</strong> "Para fechar o ciclo de qualidade, submeti a aplicação para validação prática com 5 profissionais da área: A Beatriz, que atua como Tech Recruiter, avaliou o painel administrativo; o Felipe Ramos testou a experiência de compra e os alertas de IHC; o Renan Santos validou o Wizard inicial; o Erasmo Cossatto testou o checkout e travas de pagamento; e o William Teodoro mapeou bugs na conversão de URLs do WhatsApp. Todas as falhas e melhorias de usabilidade apontadas por eles já foram tratadas e implementadas nesta versão final que estou apresentando."</p>
+        </div>
+
+        <div class="scene">
+            <div class="time">4:45 - 5:15</div>
+            <h3 class="title">Encerramento e Versionamento</h3>
+            <div class="action">💻 Ação: Mostre a tela do terminal rodando os testes unitários ou o repositório no GitHub.</div>
+            <p class="speech"><strong>🗣️ Fala:</strong> "Toda a suíte de testes com PHPUnit está passando perfeitamente e o projeto inteiro, com a documentação de uso e histórico de melhorias, está versionado e documentado no repositório do Git. A aplicação atendeu a todos os objetivos propostos tanto no aspecto de engenharia quanto nas necessidades reais de negócio. Muito obrigado pelo acompanhamento e pela atenção de todos!"</p>
+        </div>
+
+    </div>
+</body>
+</html>
