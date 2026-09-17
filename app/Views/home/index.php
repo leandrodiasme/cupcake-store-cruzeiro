@@ -840,6 +840,7 @@
     let currentModalQty = 1;
     let selectedPaymentMethod = 'PIX';
     let lastDeletedItem = null;
+    let toastTimeout = null;
 
     // Inicialização
     document.addEventListener('DOMContentLoaded', () => {
@@ -1103,6 +1104,9 @@
             cart.splice(lastDeletedItem.index, 0, lastDeletedItem.item);
             saveCart();
             lastDeletedItem = null;
+            if (toastTimeout) {
+                clearTimeout(toastTimeout);
+            }
             document.getElementById('feedbackToast').classList.remove('show');
         }
     }
@@ -1112,7 +1116,12 @@
         document.getElementById('toastMessage').innerText = msg;
         document.getElementById('toastUndoBtn').style.display = allowUndo ? 'inline' : 'none';
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 4000);
+
+        // Aumentado o tempo de exibição do Toast para 5 segundos (5000ms) conforme feedback de IHC (Felipe Ramos)
+        if (toastTimeout) {
+            clearTimeout(toastTimeout);
+        }
+        toastTimeout = setTimeout(() => toast.classList.remove('show'), 5000);
     }
 
     function openCartModal() {
