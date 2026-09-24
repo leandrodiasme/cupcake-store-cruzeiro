@@ -421,6 +421,7 @@
 
                 <div class="form-group">
                     <label for="whatsapp_number">Número do WhatsApp Oficial * (com DDD)</label>
+                    <!-- Campo obrigatório com validação required (conforme teste de aceite - Renan Santos) -->
                     <input type="text" name="whatsapp_number" id="whatsapp_number" required placeholder="(18) 99999-9999" value="<?= old('whatsapp_number', '(18) 99765-4321') ?>">
                     <small style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px; display: block;">É para este número que os clientes enviarão o comprovante do pedido já formatado.</small>
                 </div>
@@ -554,13 +555,14 @@
 
     // Navegação em passos
     function goToStep(stepNumber) {
-        // Validação simples antes de avançar do passo 1
+        // Validação no Passo 1 antes de avançar para o Passo 2 (conforme feedback de teste - Renan Santos)
         if (stepNumber === 2) {
             const name = document.getElementById('store_name').value.trim();
             const segment = document.getElementById('store_segment').value.trim();
             const phone = document.getElementById('whatsapp_number').value.trim();
-            if (!name || !segment || phone.length < 10) {
-                alert('Por favor, preencha todos os campos obrigatórios da loja antes de prosseguir.');
+            if (!name || !segment || !phone || phone.length < 10) {
+                alert('Por favor, preencha todos os campos obrigatórios da loja. O WhatsApp Oficial é obrigatório para o recebimento de pedidos.');
+                document.getElementById('whatsapp_number').focus();
                 return;
             }
         }

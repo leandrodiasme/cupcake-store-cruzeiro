@@ -30,10 +30,18 @@ class Install extends Controller
             return redirect()->to('/');
         }
 
+        // Validação obrigatória dos campos do Wizard (conforme feedback de teste de aceite - Renan Santos)
         $rules = [
             'store_name'      => 'required|min_length[3]|max_length[100]',
             'store_segment'   => 'required|min_length[2]|max_length[50]',
-            'whatsapp_number' => 'required|min_length[10]|max_length[20]',
+            'whatsapp_number' => [
+                'rules'  => 'required|min_length[10]|max_length[20]',
+                'errors' => [
+                    'required'   => 'O campo WhatsApp Oficial é obrigatório para o recebimento de pedidos.',
+                    'min_length' => 'O WhatsApp Oficial deve conter pelo menos 10 dígitos com DDD.',
+                    'max_length' => 'O WhatsApp Oficial não pode exceder 20 caracteres.',
+                ],
+            ],
             'opening_time'    => 'required',
             'closing_time'    => 'required',
             'admin_name'      => 'required|min_length[3]|max_length[100]',

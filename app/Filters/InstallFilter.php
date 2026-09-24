@@ -22,6 +22,12 @@ class InstallFilter implements FilterInterface
                 return redirect()->to('/install');
             }
         } else {
+            // Validação de integridade: garante que o WhatsApp Oficial esteja preenchido
+            $whatsapp = $settingModel->getVal('whatsapp_number');
+            if (empty($whatsapp) && ! $isInstallRoute) {
+                return redirect()->to('/install')->with('error', 'O WhatsApp Oficial não está configurado. Conclua o passo a passo da instalação.');
+            }
+
             if ($isInstallRoute) {
                 return redirect()->to('/');
             }
