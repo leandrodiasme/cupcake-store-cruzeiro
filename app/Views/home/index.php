@@ -803,6 +803,7 @@
                     <div class="form-group" id="changeGroup" style="display: none; margin-top: 14px;">
                         <label for="checkout_change">Precisa de troco para quanto?</label>
                         <input type="number" id="checkout_change" placeholder="Ex: 50,00" step="0.50">
+                        <small id="changeHelp" style="font-size: 0.82rem; margin-top: 5px; display: block; font-weight: 500;"></small>
                     </div>
                 </div>
             </div>
@@ -847,6 +848,7 @@
         renderCartUI();
         initMasks();
         initViaCep();
+        initChangeValidation();
     });
 
     // MÁSCARAS VANILLA JS (IHC)
@@ -1046,6 +1048,11 @@
 
         modalTotal.innerText = 'R$ ' + totalAmount.toFixed(2).replace('.', ',');
 
+        // Atualiza a validação de troco se a opção Dinheiro estiver ativa
+        if (selectedPaymentMethod === 'Dinheiro') {
+            validateChangeAmount();
+        }
+
         // Renderizar lista no modal
         const listContainer = document.getElementById('cartItemsList');
         if (cart.length === 0) {
@@ -1139,10 +1146,66 @@
         btn.classList.add('selected');
 
         const changeGroup = document.getElementById('changeGroup');
+        const changeHelp = document.getElementById('changeHelp');
+        const changeInput = document.getElementById('checkout_change');
+
         if (method === 'Dinheiro') {
             changeGroup.style.display = 'block';
+            changeInput?.focus();
+            validateChangeAmount();
         } else {
             changeGroup.style.display = 'none';
+            if (changeHelp) changeHelp.innerText = '';
+            if (changeInput) {
+                changeInput.style.borderColor = '';
+                changeInput.value = '';
+            }
+        }
+    }
+
+    // Validação e cálculo dinâmico de troco para dinheiro (conforme teste de aceite - Erasmo Cossatto)
+    function validateChangeAmount() {
+        const changeInput = document.getElementById('checkout_change');
+        const changeHelp = document.getElementById('changeHelp');
+        if (!changeInput || !changeHelp) return true;
+
+        const totalAmount = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+        const rawVal = changeInput.value.trim();
+
+        if (!rawVal) {
+            changeHelp.innerText = '';
+            changeInput.style.borderColor = '';
+            return true;
+        }
+
+        const changeFor = parseFloat(rawVal);
+        if (isNaN(changeFor)) {
+            changeHelp.innerText = '⚠️ Digite um valor numérico válido para o troco.';
+            changeHelp.style.color = '#ef4444';
+            changeInput.style.borderColor = '#ef4444';
+            return false;
+        }
+
+        if (changeFor < totalAmount) {
+            const formattedTotal = totalAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            changeHelp.innerText = `⚠️ O valor do troco não pode ser menor que o total da compra (${formattedTotal}).`;
+            changeHelp.style.color = '#ef4444';
+            changeInput.style.borderColor = '#ef4444';
+            return false;
+        } else {
+            const trocoDevolver = changeFor - totalAmount;
+            const formattedTroco = trocoDevolver.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            changeHelp.innerText = `💵 Troco a devolver para o cliente: ${formattedTroco}`;
+            changeHelp.style.color = '#10b981';
+            changeInput.style.borderColor = '#10b981';
+            return true;
+        }
+    }
+
+    function initChangeValidation() {
+        const changeInput = document.getElementById('checkout_change');
+        if (changeInput) {
+            changeInput.addEventListener('input', validateChangeAmount);
         }
     }
 
@@ -1175,9 +1238,18 @@
 
         const totalAmount = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
-        if (selectedPaymentMethod === 'Dinheiro' && changeFor && parseFloat(changeFor) < totalAmount) {
-            alert('O valor informado para o troco não pode ser menor que o total do pedido.');
-            return;
+        // Validação via JavaScript impedindo o fechamento do pedido se o troco for inferior ao total (conforme feedback de teste - Erasmo Cossatto)
+        if (selectedPaymentMethod === 'Dinheiro' && changeFor) {
+            const changeVal = parseFloat(changeFor);
+            if (changeVal < totalAmount) {
+                const formattedTotal = totalAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                const formattedChange = changeVal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                alert(`O valor informado para o troco (${formattedChange}) não pode ser inferior ao total do pedido (${formattedTotal}).`);
+                const changeInput = document.getElementById('checkout_change');
+                changeInput.focus();
+                changeInput.style.borderColor = '#ef4444';
+                return;
+            }
         }
 
         const btn = document.getElementById('btnSubmitOrder');

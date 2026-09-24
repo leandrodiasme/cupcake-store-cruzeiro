@@ -76,6 +76,14 @@ class Api extends Controller
             ])->setStatusCode(422);
         }
 
+        // Validação no backend impedindo troco inferior ao total (conforme teste de aceite - Erasmo Cossatto)
+        if ($paymentMethod === 'Dinheiro' && $changeFor !== null && $changeFor < $totalAmount) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'O valor informado para o troco não pode ser menor que o total do pedido.',
+            ])->setStatusCode(422);
+        }
+
         // Salvar pedido no banco
         $orderModel = new OrderModel();
         $orderId    = $orderModel->insert([
