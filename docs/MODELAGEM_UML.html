@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelagem UML - PIT II Cruzeiro do Sul Virtual</title>
+    <!-- Mermaid CDN para renderização automática de diagramas -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border: #e2e8f0;
+            --accent: #eff6ff;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            background: var(--card);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-bottom: 4px solid var(--primary);
+        }
+        .header h1 {
+            color: var(--primary);
+            margin: 0 0 10px 0;
+            font-size: 1.8rem;
+        }
+        .header p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 1rem;
+        }
+        .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+        .section-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+        .section-title {
+            font-size: 1.35rem;
+            color: var(--text-main);
+            margin-top: 0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 12px;
+        }
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+        .diagram-container {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            text-align: center;
+        }
+        .print-tip {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            color: #065f46;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .section-card { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+            .print-tip { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header">
+            <h1>📐 Modelagem UML da Solução de Software</h1>
+            <p><strong>Projeto Integrador Transdisciplinar em Engenharia de Software II</strong> (Cruzeiro do Sul Virtual)</p>
+            <span class="badge">Situação-Problema 1: Modelagem Estrutural e Comportamental</span>
+        </div>
+
+        <div class="print-tip">
+            💡 <strong>Dica para o Aluno:</strong> Você pode tirar prints destes diagramas para colocar no relatório em Word/PDF, ou pressionar <strong>Ctrl + P</strong> para imprimir esta página diretamente como PDF.
+        </div>
+
+        <!-- 1. CASOS DE USO -->
+        <div class="section-card">
+            <h2 class="section-title">1. Diagrama de Casos de Uso (Use Case Diagram)</h2>
+            <p class="section-desc">Mapeia os atores do sistema (Cliente, Administrador e APIs externas) e todas as funcionalidades disponibilizadas na aplicação web com relações <code>&lt;&lt;include&gt;&gt;</code> e <code>&lt;&lt;extend&gt;&gt;</code>.</p>
+            <div class="diagram-container">
+                <pre class="mermaid">
+flowchart TD
+    subgraph Atores
+        Cliente(["👤 Cliente / Consumidor"])
+        Admin(["👨‍💼 Administrador / Lojista"])
+        ViaCEP[("🌐 API Externa ViaCEP")]
+        WhatsApp[("📱 API Externa WhatsApp")]
+    end
+
+    subgraph "Casos de Uso - Área Pública do Cliente"
+        UC01([UC01: Visualizar Cardápio por Categoria])
+        UC02([UC02: Personalizar Produto com Opcionais & Obs])
+        UC03([UC03: Gerenciar Sacola com Reversibilidade IHC])
+        UC04([UC04: Consultar Endereço por CEP])
+        UC05([UC05: Validar Horário Comercial da Loja])
+        UC06([UC06: Selecionar Pagamento e Validar Troco])
+        UC07([UC07: Fechar Pedido e Redirecionar ao WhatsApp])
+    end
+
+    subgraph "Casos de Uso - Área Administrativa & Instalação"
+        UC08([UC08: Executar Wizard Dinâmico de Instalação])
+        UC09([UC09: Autenticar Administrador])
+        UC10([UC10: Analisar Métricas / Gráfico Chart.js])
+        UC11([UC11: Gerenciar Categorias CRUD])
+        UC12([UC12: Gerenciar Produtos e Opcionais CRUD])
+        UC13([UC13: Parametrizar White-Label Cor, Horários])
+    end
+
+    %% Relacionamentos do Cliente
+    Cliente --> UC01
+    Cliente --> UC02
+    Cliente --> UC03
+    Cliente --> UC06
+    Cliente --> UC07
+
+    UC02 -.->|<<extend>>| UC01
+    UC07 -.->|<<include>>| UC05
+    UC07 -.->|<<include>>| UC06
+    UC06 -.->|<<include>>| UC04
+
+    UC04 <--> ViaCEP
+    UC07 --> WhatsApp
+
+    %% Relacionamentos do Administrador
+    Admin --> UC08
+    Admin --> UC09
+    Admin --> UC10
+    Admin --> UC11
+    Admin --> UC12
+    Admin --> UC13
+                </pre>
+            </div>
+        </div>
+
+        <!-- 2. DIAGRAMA DE CLASSES -->
+        <div class="section-card">
+            <h2 class="section-title">2. Diagrama de Classes de Domínio e Persistência (Class Diagram)</h2>
+            <p class="section-desc">Representa o modelo estrutural de classes orientadas a objetos, atributos tipados, métodos encapsulados e integridade referencial com cardinalidades no padrão MVC.</p>
+            <div class="diagram-container">
+                <pre class="mermaid">
+classDiagram
+    direction TB
+
+    class Setting {
+        -string key
+        -string value
+        -datetime updated_at
+        +getVal(key, default) string
+        +setVal(key, value) bool
+        +isInstalled() bool
+        +getAllKeyValue() array
+    }
+
+    class User {
+        -int id
+        -string name
+        -string email
+        -string password
+        -string role
+        -datetime created_at
+        -datetime updated_at
+        +verifyPassword(plainPassword) bool
+        +hashPassword(password) string
+    }
+
+    class Category {
+        -int id
+        -string name
+        -string description
+        -int display_order
+        -bool active
+        -datetime created_at
+        -datetime updated_at
+        +getActiveCategories() array
+    }
+
+    class Product {
+        -int id
+        -int category_id
+        -string name
+        -string description
+        -float price
+        -string image_url
+        -bool active
+        -datetime created_at
+        -datetime updated_at
+        +getOptions() array
+        +calculateSubtotal(quantity, selectedOptions) float
+    }
+
+    class ProductOption {
+        -int id
+        -int product_id
+        -string name
+        -float price
+        -bool active
+    }
+
+    class ProductClick {
+        -int id
+        -int product_id
+        -string ip_address
+        -string user_agent
+        -datetime clicked_at
+        +recordClick(productId, ip, userAgent) bool
+    }
+
+    class Order {
+        -int id
+        -string customer_name
+        -string customer_phone
+        -string cep
+        -string street
+        -string number
+        -string neighborhood
+        -string city
+        -string complement
+        -string payment_method
+        -float change_for
+        -float total_amount
+        -string order_items_json
+        -string status
+        -datetime created_at
+        +getItems() array
+        +formatSummary() string
+    }
+
+    Category "1" *-- "0..*" Product : agrupa
+    Product "1" *-- "0..*" ProductOption : compõe
+    Product "1" o-- "0..*" ProductClick : rastreia
+    Order "1" o-- "1..*" Product : referencia itens
+                </pre>
+            </div>
+        </div>
+
+        <!-- 3. DIAGRAMA DE SEQUÊNCIA -->
+        <div class="section-card">
+            <h2 class="section-title">3. Diagrama de Sequência: Realização de Pedido</h2>
+            <p class="section-desc">Fluxo temporal de mensagens síncronas e assíncronas entre os componentes do MVC (View, Controller, Model) e as APIs externas (ViaCEP e WhatsApp).</p>
+            <div class="diagram-container">
+                <pre class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Cliente as 👤 Cliente
+    participant View as 🖥️ View (index.php)
+    participant ViaCEP as 🌐 ViaCEP API
+    participant Controller as ⚙️ Api (Controller)
+    participant SettingModel as 🗄️ SettingModel
+    participant OrderModel as 🗄️ OrderModel
+    participant DB as 💾 Banco (SQLite/MySQL)
+    participant WhatsApp as 📱 WhatsApp (wa.me)
+
+    Cliente->>View: 1. Informa CEP no Checkout (ex: 16010-000)
+    View->>ViaCEP: 2. GET https://viacep.com.br/ws/16010000/json/
+    ViaCEP-->>View: 3. Retorna {logradouro, bairro, localidade}
+    View->>View: 4. Autopreencha Rua, Bairro e Cidade
+
+    Cliente->>View: 5. Seleciona "Dinheiro" e digita troco para R$ 50,00
+    View->>View: 6. Valida se troco >= total e calcula valor do troco
+    Cliente->>View: 7. Clica em "Finalizar no WhatsApp"
+
+    View->>Controller: 8. POST /api/create-order (JSON do pedido)
+    Controller->>SettingModel: 9. Obter horários comerciais (opening_time, closing_time)
+    SettingModel-->>Controller: 10. Retorna horários configurados
+    Controller->>Controller: 11. Valida se a loja está aberta (isStoreOpen)
+    Controller->>Controller: 12. Valida se troco em dinheiro é consistente (isValidCashChange)
+
+    alt Loja fechada ou troco menor que o total
+        Controller-->>View: 13a. HTTP 403/422 {status: 'error', message: '...'}
+        View-->>Cliente: 14a. Exibe Toast/Alerta de Erro de Validação
+    else Dados válidos e loja em expediente
+        Controller->>OrderModel: 13b. insert(dadosDoPedido, itens_json)
+        OrderModel->>DB: 14b. INSERT INTO orders (...)
+        DB-->>OrderModel: 15b. ID do Pedido gerado (#ID 42)
+        OrderModel-->>Controller: 16b. Confirmação de persistência
+        Controller->>Controller: 17b. formatWhatsAppMessage() + urlencode(message)
+        Controller->>Controller: 18b. generateWhatsAppUrl(phone, encodedMessage)
+        Controller-->>View: 19b. HTTP 200 {status: 'success', whatsapp_url: 'https://wa.me/...'}
+        View->>WhatsApp: 20b. window.open(whatsapp_url, '_blank')
+        WhatsApp-->>Cliente: 21b. Abre aplicativo/web do WhatsApp com texto estruturado
+    end
+                </pre>
+            </div>
+        </div>
+
+        <!-- 4. DIAGRAMA DE ATIVIDADES -->
+        <div class="section-card">
+            <h2 class="section-title">4. Diagrama de Atividades: Checkout e Tolerância a Falhas</h2>
+            <p class="section-desc">Demonstra o fluxo comportamental do processo de compra, as decisões de negócio e os princípios de tolerância a falhas e reversibilidade de IHC.</p>
+            <div class="diagram-container">
+                <pre class="mermaid">
+flowchart TD
+    Start([Início]) --> OpenCatalog[Cliente navega no cardápio]
+    OpenCatalog --> SelectProduct[Clica em um item]
+    SelectProduct --> TrackClick[Sistema registra clique em product_clicks via AJAX]
+    TrackClick --> CustomizeItem[Seleciona opcionais e digita observação]
+    CustomizeItem --> AddToCart[Adiciona item à sacola]
+
+    AddToCart --> CheckUndo{Deseja remover item?}
+    CheckUndo -- Sim --> RemoveItem[Remove item e ativa Toast de 5s]
+    RemoveItem --> ClickUndo{Clicou em Desfazer antes de 5s?}
+    ClickUndo -- Sim --> RestoreItem[Item é restaurado na sacola]
+    RestoreItem --> CartReady[Sacola atualizada]
+    ClickUndo -- Não --> CartReady
+    CheckUndo -- Não --> CartReady
+
+    CartReady --> OpenCheckout[Abre modal de Checkout]
+    OpenCheckout --> InputCEP[Digita os 8 dígitos do CEP]
+    InputCEP --> FetchViaCEP[Consulta assíncrona ViaCEP]
+    FetchViaCEP --> AutoFill[Campos de Rua, Bairro e Cidade preenchidos]
+
+    AutoFill --> SelectPayment[Seleciona Forma de Pagamento]
+    SelectPayment --> IsCash{Pagamento em Dinheiro?}
+    
+    IsCash -- Sim --> InputChange[Digita valor para troco]
+    InputChange --> ValidateChange{Troco >= Total?}
+    ValidateChange -- Não --> ChangeAlert[Exibe aviso em vermelho e bloqueia envio]
+    ChangeAlert --> InputChange
+    ValidateChange -- Sim --> ShowGreenFeedback[Calcula troco a devolver e exibe em verde]
+    ShowGreenFeedback --> SubmitOrder[Clica em Finalizar Pedido]
+
+    IsCash -- Não --> SubmitOrder
+
+    SubmitOrder --> CheckStoreHours{Loja está aberta?}
+    CheckStoreHours -- Não --> ShowClosedAlert[Notifica que o estabelecimento está fechado]
+    ShowClosedAlert --> EndFail([Pedido Bloqueado])
+
+    CheckStoreHours -- Sim --> PersistOrder[Salva registro completo na tabela orders]
+    PersistOrder --> EncodeURL[Formata mensagem e sanitiza via urlencode]
+    EncodeURL --> RedirectWhatsApp[Redireciona para URL do wa.me]
+    RedirectWhatsApp --> EndSuccess([Pedido Concluído com Sucesso])
+                </pre>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+            themeVariables: {
+                primaryColor: '#e0e7ff',
+                primaryTextColor: '#1e293b',
+                primaryBorderColor: '#6366f1',
+                lineColor: '#475569',
+                secondaryColor: '#f1f5f9',
+                tertiaryColor: '#ffffff'
+            }
+        });
+    </script>
+</body>
+</html>
