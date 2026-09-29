@@ -75,45 +75,57 @@
         <h1>Roteiro do Vídeo de Demonstração</h1>
 
         <div class="scene">
-            <div class="time">0:00 - 0:45</div>
-            <h3 class="title">Introdução e Contexto do Projeto</h3>
-            <div class="action">🎥 Ação: Comece com a câmera ligada mostrando seu rosto antes de compartilhar a tela.</div>
-            <p class="speech"><strong>🗣️ Fala:</strong> "Fala, pessoal! Olá, tutor e avaliadores. Meu nome é Leandro Pereira Dias, e este vídeo é a apresentação prática do meu Projeto Integrador Transdisciplinar em Engenharia de Software II. Eu desenvolvi uma Plataforma de Pedidos Online White-Label completa utilizando PHP 8 com o framework CodeIgniter 4, estruturada rigorosamente no padrão de arquitetura MVC. A ideia central do projeto foi criar uma solução reutilizável e adaptável: o mesmo código-fonte serve perfeitamente tanto para uma lanchonete de frango frito quanto para uma loja especializada em cupcakes, bastando parametrizar a identidade no início."</p>
+            <div class="time">0:00 - 0:40</div>
+            <h3 class="title">Cena 1: Abertura e Apresentação do Projeto</h3>
+            <div class="action">🎥 <strong>Ação de Vídeo:</strong> Comece com a webcam ligada mostrando seu rosto (ou no canto da tela). Mantenha postura profissional e fale com naturalidade.</div>
+            <p class="speech"><strong>🗣️ Fala:</strong> "Olá, professor e tutor avaliador! Meu nome é <strong>Leandro Pereira Dias</strong>, aluno de Engenharia de Software da Cruzeiro do Sul Virtual. Este vídeo é a apresentação prática do meu <strong>Projeto Integrador Transdisciplinar em Engenharia de Software II (PIT II)</strong>. Desenvolvi uma plataforma web completa de pedidos e cardápio digital White-Label, construída em <strong>PHP 8</strong> com o framework <strong>CodeIgniter 4</strong>, seguindo estritamente a arquitetura <strong>MVC (Model-View-Controller)</strong>. Vamos ver agora o sistema funcionando do zero, desde a instalação até o fechamento de um pedido no WhatsApp!"</p>
         </div>
 
         <div class="scene">
-            <div class="time">0:45 - 1:45</div>
-            <h3 class="title">Arquitetura de Dados e Wizard Dinâmico</h3>
-            <div class="action">💻 Ação: Compartilhe a tela e abra o navegador na rota /install.</div>
-            <p class="speech"><strong>🗣️ Fala:</strong> "Entrando aqui na parte prática, o sistema conta com um filtro global de instalação. Se o banco de dados estiver zerado, ele intercepta qualquer tentativa de navegação e joga o usuário direto para este Wizard de 4 etapas. Aqui nós definimos o nome da loja, o segmento de atuação, o número do WhatsApp oficial e os horários de atendimento. Para desenvolvimento local, utilizei um banco leve em SQLite 3, mas toda a estrutura foi modelada via migrations do CodeIgniter. Isso significa que para publicar numa VPS na Hostinger rodando MySQL ou MariaDB, basta rodar o comando de migração sem mexer em nenhuma linha de código. Vou concluir a etapa do assistente para vocês verem ele criando as tabelas relacionais e já nos redirecionando para o painel."</p>
+            <div class="time">0:40 - 1:35</div>
+            <h3 class="title">Cena 2: Wizard Dinâmico de Instalação (/install)</h3>
+            <div class="action">💻 <strong>Ação de Vídeo:</strong> Compartilhe a tela no navegador em <code>http://localhost:8080/</code>. Mostre que o filtro intercepta e abre o Wizard.
+            <br>📝 <strong>Dados para preencher rápido:</strong>
+            <ul>
+                <li><strong>Nome da Loja:</strong> Doce Encanto Cupcakes | <strong>Segmento:</strong> Confeitaria Gourmet</li>
+                <li><strong>WhatsApp Oficial:</strong> (18) 99765-4321 | <strong>Horário:</strong> 09:00 às 22:00</li>
+                <li><strong>Nome Admin:</strong> Leandro Dias | <strong>E-mail:</strong> admin@loja.com | <strong>Senha:</strong> admin123</li>
+            </ul>
+            Clique em <strong>Concluir Instalação</strong> e mostre as Migrations rodando e gerando o banco relacional SQLite/MySQL.</div>
+            <p class="speech"><strong>🗣️ Fala:</strong> "Como podem ver, o sistema possui um filtro global de instalação. Com o banco zerado, ele redireciona automaticamente para o nosso Wizard. Aqui nós configuramos a identidade da loja, o número oficial do WhatsApp, o horário comercial de atendimento e o primeiro administrador. Ao clicar em Concluir, o CodeIgniter executa programaticamente as Migrations do banco relacional e popula os dados iniciais do nicho. Toda a estrutura é 100% compatível tanto com SQLite local quanto com MySQL na VPS de produção."</p>
         </div>
 
         <div class="scene">
-            <div class="time">1:45 - 2:45</div>
-            <h3 class="title">Gestão Administrativa e Regras de Negócio</h3>
-            <div class="action">💻 Ação: Faça o login e navegue pelas telas do /admin.</div>
-            <p class="speech"><strong>🗣️ Fala:</strong> "Aqui dentro do painel restrito, temos a visão completa do lojista. O Dashboard exibe um gráfico interativo com Chart.js alimentado em tempo real por cliques, o que permite identificar com facilidade quais produtos estão despertando mais interesse nos clientes. Nós temos o CRUD de categorias, cadastro de produtos com adicionais e a tela de configurações White-Label. Nela, eu consigo trocar a cor primária da marca com um clique e ajustar os horários comerciais. Inclusive, uma regra de negócio essencial: se a loja estiver fora do expediente cadastrado, a aplicação bloqueia o checkout lá no front-end para evitar pedidos em horários indevidos."</p>
+            <div class="time">1:35 - 2:35</div>
+            <h3 class="title">Cena 3: Painel Administrativo, Gráfico e Regras de Negócio</h3>
+            <div class="action">💻 <strong>Ação de Vídeo:</strong> Faça login com <code>admin@loja.com</code> e senha <code>admin123</code>.
+            <br>• Mostre o Dashboard com o gráfico do <strong>Chart.js</strong> de produtos mais populares.
+            <br>• Clique no menu <strong>Configurações</strong> e mostre o seletor de cor primária e os horários comerciais.
+            <br>• Destaque que a melhoria de responsividade no mobile (apontada pela avaliadora Beatriz) foi corrigida aqui.</div>
+            <p class="speech"><strong>🗣️ Fala:</strong> "Entrando no Painel Administrativo restrito, temos o Dashboard gerencial com gráfico interativo em Chart.js alimentado em tempo real por cliques e interesse dos clientes. Uma das correções do teste de qualidade da Beatriz foi aplicada aqui, garantindo responsividade total em telas de celular. No menu de Configurações, o lojista altera a cor tema da marca e os horários de expediente. O sistema possui a regra de negócio que valida esse horário: se a loja estiver fechada, o botão de compra na vitrine é desativado automaticamente."</p>
         </div>
 
         <div class="scene">
-            <div class="time">2:45 - 3:45</div>
-            <h3 class="title">Experiência do Consumidor e Checkout Inteligente</h3>
-            <div class="action">💻 Ação: Vá para a página inicial pública, adicione itens à sacola e abra o carrinho.</div>
-            <p class="speech"><strong>🗣️ Fala:</strong> "Agora, olhando pelo lado do cliente: a interface foi pensada para ser rápida e limpa. O usuário escolhe o produto, seleciona adicionais e o subtotal recalcula na hora. Seguindo boas práticas de IHC, a sacola tem ações reversíveis: se eu excluir um produto sem querer, o sistema me dá um aviso com botão de desfazer. Indo para o checkout, implementei uma máscara em JavaScript no campo de CEP. Quando o cliente digita os 8 dígitos, a API do ViaCEP busca rua, bairro e cidade de forma assíncrona, deixando o cursor direto no número. Ao escolher o pagamento e clicar em concluir, os dados são salvos no banco e o sistema gera uma mensagem limpa e estruturada, abrindo o WhatsApp oficial da loja prontinho para o envio."</p>
+            <div class="time">2:35 - 3:50</div>
+            <h3 class="title">Cena 4: Experiência do Cliente, IHC e Envio ao WhatsApp</h3>
+            <div class="action">💻 <strong>Ação de Vídeo:</strong> Abra a página inicial (<code>http://localhost:8080/</code>).
+            <br>1. Clique em um cupcake (ex: <strong>Cupcake Red Velvet</strong>).
+            <br>2. Marque um adicional e preencha o campo de observações: <code>Sem canela & bastante calda #presente</code> (destacando a correção do William Teodoro).
+            <br>3. Abra a sacola. Remova um item e clique no botão <strong>"Desfazer"</strong> no Toast de 5 segundos (destacando a correção do Felipe Ramos).
+            <br>4. No formulário de entrega, digite o CEP <code>16010-000</code> e mostre o endereço preenchido via <strong>ViaCEP</strong>.
+            <br>5. Escolha a opção <strong>Dinheiro</strong> e digite troco para <code>50,00</code>, mostrando o cálculo em tempo real e a validação de segurança (destacando a correção do Erasmo Cossatto).
+            <br>6. Clique em <strong>Finalizar no WhatsApp</strong>: mostre a mensagem formatada na API wa.me sem quebra de links!</div>
+            <p class="speech"><strong>🗣️ Fala:</strong> "Agora na visão do cliente: a interface é rápida, limpa e pensada nos princípios de IHC. O cliente escolhe adicionais e pode digitar observações personalizadas. No carrinho, implementamos tolerância a falhas: ao excluir um item, o Toast permanece por 5 segundos com a opção Desfazer. No checkout, integramos a API do ViaCEP com máscara em JavaScript. Ao escolher pagamento em dinheiro, o sistema valida dinamicamente se o troco informado é suficiente e calcula o valor a devolver. Ao finalizar, o pedido é salvo no banco e o sistema gera o link codificado do WhatsApp sem quebras, mesmo com caracteres especiais."</p>
         </div>
 
         <div class="scene">
-            <div class="time">3:45 - 4:45</div>
-            <h3 class="title">Validação por Pares e Ciclo de Melhorias</h3>
-            <div class="action">💻 Ação: Mostre rapidamente o arquivo de testes ou a tela do sistema ajustada.</div>
-            <p class="speech"><strong>🗣️ Fala:</strong> "Para fechar o ciclo de qualidade, submeti a aplicação para validação prática com 5 profissionais da área: A Beatriz, que atua como Tech Recruiter, avaliou o painel administrativo; o Felipe Ramos testou a experiência de compra e os alertas de IHC; o Renan Santos validou o Wizard inicial; o Erasmo Cossatto testou o checkout e travas de pagamento; e o William Teodoro mapeou bugs na conversão de URLs do WhatsApp. Todas as falhas e melhorias de usabilidade apontadas por eles já foram tratadas e implementadas nesta versão final que estou apresentando."</p>
-        </div>
-
-        <div class="scene">
-            <div class="time">4:45 - 5:15</div>
-            <h3 class="title">Encerramento e Versionamento</h3>
-            <div class="action">💻 Ação: Mostre a tela do terminal rodando os testes unitários ou o repositório no GitHub.</div>
-            <p class="speech"><strong>🗣️ Fala:</strong> "Toda a suíte de testes com PHPUnit está passando perfeitamente e o projeto inteiro, com a documentação de uso e histórico de melhorias, está versionado e documentado no repositório do Git. A aplicação atendeu a todos os objetivos propostos tanto no aspecto de engenharia quanto nas necessidades reais de negócio. Muito obrigado pelo acompanhamento e pela atenção de todos!"</p>
+            <div class="time">3:50 - 4:40</div>
+            <h3 class="title">Cena 5: Testes Automatizados (PHPUnit) e Conclusão</h3>
+            <div class="action">💻 <strong>Ação de Vídeo:</strong> Abra o terminal na raiz do projeto e execute:
+            <br><code>php vendor/bin/phpunit</code>
+            <br>Mostre os <strong>12 testes e 46 asserções aprovadas</strong>.
+            <br>Abra rapidamente o repositório no GitHub: <code>github.com/leandrodiasme/cupcake-store-cruzeiro</code>.</div>
+            <p class="speech"><strong>🗣️ Fala:</strong> "Para assegurar a qualidade e estabilidade de todo o ecossistema, implementamos uma suíte completa de testes automatizados com PHPUnit. Como vocês podem ver no terminal, temos 12 testes unitários e 46 asserções rodando com 100% de aprovação, cobrindo regras de horário comercial, cálculo de troco, persistência e formatação de URLs. O código-fonte completo, o manual de uso e o laudo de testes por pares estão documentados e versionados no GitHub. Muito obrigado a todos pela atenção!"</p>
         </div>
 
     </div>
