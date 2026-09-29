@@ -8,7 +8,7 @@
 
 > Espaço reservado para inclusão do link do vídeo de apresentação da solução em funcionamento:
 > 
-> **Link do Vídeo Demonstrativo:** `[INSERIR_LINK_DO_VIDEO_AQUI - Ex: YouTube / Google Drive / Loom]`
+> **Link do Vídeo Demonstrativo:** `https://youtu.be/ENNPprrEVOo?si=v8G1dmirZM7E7vzQ`
 
 ---
 
