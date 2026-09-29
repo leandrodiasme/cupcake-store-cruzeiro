@@ -100,4 +100,30 @@ final class StoreBusinessRulesTest extends CIUnitTestCase
         $this->assertStringContainsString('50,00', $message);
         $this->assertStringContainsString('38,50', $message);
     }
+
+    /**
+     * Testa a validação de troco para pagamento em dinheiro
+     * (Regra de aceite levantada por Erasmo Cossatto)
+     */
+    public function testCashChangeValidation(): void
+    {
+        $api = new Api();
+        $totalAmount = 50.00;
+
+        // Troco válido (maior ou igual ao total)
+        $this->assertTrue($api->isValidCashChange(100.00, $totalAmount, 'Dinheiro'));
+        $this->assertTrue($api->isValidCashChange(50.00, $totalAmount, 'Dinheiro'));
+
+        // Pagamento exato em dinheiro sem solicitação de troco (null)
+        $this->assertTrue($api->isValidCashChange(null, $totalAmount, 'Dinheiro'));
+
+        // Troco inválido (menor que o total do pedido)
+        $this->assertFalse($api->isValidCashChange(49.90, $totalAmount, 'Dinheiro'));
+        $this->assertFalse($api->isValidCashChange(20.00, $totalAmount, 'Dinheiro'));
+        $this->assertFalse($api->isValidCashChange(-10.00, $totalAmount, 'Dinheiro'));
+
+        // Formas de pagamento que não exigem troco (ex: PIX, Cartão)
+        $this->assertTrue($api->isValidCashChange(10.00, $totalAmount, 'PIX'));
+        $this->assertTrue($api->isValidCashChange(10.00, $totalAmount, 'Cartão'));
+    }
 }

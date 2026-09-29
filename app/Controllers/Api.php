@@ -77,7 +77,7 @@ class Api extends Controller
         }
 
         // Validação no backend impedindo troco inferior ao total (conforme teste de aceite - Erasmo Cossatto)
-        if ($paymentMethod === 'Dinheiro' && $changeFor !== null && $changeFor < $totalAmount) {
+        if (! $this->isValidCashChange($changeFor, $totalAmount, $paymentMethod)) {
             return $this->response->setJSON([
                 'status'  => 'error',
                 'message' => 'O valor informado para o troco não pode ser menor que o total do pedido.',
@@ -193,5 +193,22 @@ class Api extends Controller
         $msg .= "Aguardando confirmação do pedido pela loja! 🧁";
 
         return $msg;
+    }
+
+    /**
+     * Valida se o valor de troco informado é suficiente para o pagamento em dinheiro
+     * (Regra de IHC / Negócio levantada no teste de aceite por Erasmo Cossatto)
+     */
+    public function isValidCashChange(?float $changeFor, float $totalAmount, string $paymentMethod): bool
+    {
+        if ($paymentMethod !== 'Dinheiro') {
+            return true;
+        }
+
+        if ($changeFor === null) {
+            return true; // Pagamento com valor exato em dinheiro (sem troco)
+        }
+
+        return $changeFor >= $totalAmount;
     }
 }
