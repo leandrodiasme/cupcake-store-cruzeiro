@@ -714,6 +714,12 @@
                     <div id="modalProdOptionsList" style="display: flex; flex-direction: column; gap: 8px;"></div>
                 </div>
 
+                <!-- Observações do Produto (conforme teste de aceite - William Teodoro) -->
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="modalProdNotes" style="font-size: 0.88rem; font-weight: 600; display: block; margin-bottom: 6px;">Observações do Produto (opcional):</label>
+                    <input type="text" id="modalProdNotes" placeholder="Ex: Pouco açúcar, caprichar na calda & embalagem especial #aniversário" maxlength="150">
+                </div>
+
                 <!-- Quantidade -->
                 <div style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border);">
                     <span style="font-weight: 700; font-size: 0.9rem;">Quantidade:</span>
@@ -964,6 +970,7 @@
             optsContainer.style.display = 'none';
         }
 
+        document.getElementById('modalProdNotes').value = '';
         document.getElementById('modalProdQty').innerText = '1';
         calcModalTotal();
         document.getElementById('productModalOverlay').classList.add('active');
@@ -1000,8 +1007,10 @@
             unitPrice += optPrice;
         });
 
-        // Identificador único considerando opções
-        const itemKey = currentModalProduct.id + '_' + selectedOptions.map(o => o.name).sort().join('_');
+        const notes = document.getElementById('modalProdNotes') ? document.getElementById('modalProdNotes').value.trim() : '';
+
+        // Identificador único considerando opções e observações
+        const itemKey = currentModalProduct.id + '_' + selectedOptions.map(o => o.name).sort().join('_') + (notes ? '_obs_' + notes : '');
 
         const existing = cart.find(i => i.key === itemKey);
         if (existing) {
@@ -1014,7 +1023,8 @@
                 price: unitPrice,
                 base_price: parseFloat(currentModalProduct.price),
                 quantity: currentModalQty,
-                options: selectedOptions
+                options: selectedOptions,
+                notes: notes
             });
         }
 
@@ -1069,10 +1079,15 @@
                 ? item.options.map(o => o.name).join(', ') 
                 : '';
 
+            const notesText = item.notes 
+                ? `<div style="font-size: 0.78rem; color: #64748b; font-style: italic; margin-top: 2px;">📝 Obs: ${item.notes}</div>` 
+                : '';
+
             itemEl.innerHTML = `
                 <div class="cart-item-info">
                     <div class="cart-item-title">${item.name}</div>
                     ${optsText ? `<div class="cart-item-opts">+ ${optsText}</div>` : ''}
+                    ${notesText}
                     <div style="font-weight: 700; color: var(--primary); font-size: 0.88rem; margin-top: 4px;">
                         R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}
                     </div>

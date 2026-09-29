@@ -124,7 +124,7 @@ class Api extends Controller
             $totalAmount
         );
 
-        $whatsappUrl = 'https://wa.me/' . $whatsapp . '?text=' . urlencode($textMessage);
+        $whatsappUrl = $this->generateWhatsAppUrl($whatsapp, $textMessage);
 
         return $this->response->setJSON([
             'status'       => 'success',
@@ -179,6 +179,12 @@ class Api extends Controller
                     $msg .= "   + {$optName} (R$ " . number_format($optPrice, 2, ',', '.') . ")\n";
                 }
             }
+
+            // Observações do item com caracteres especiais (conforme feedback - William Teodoro)
+            if (! empty($item['notes'])) {
+                $notes = trim((string) $item['notes']);
+                $msg .= "   📝 _Obs: {$notes}_\n";
+            }
         }
 
         $msg .= "-------------------------------------------\n";
@@ -210,5 +216,16 @@ class Api extends Controller
         }
 
         return $changeFor >= $totalAmount;
+    }
+
+    /**
+     * Gera a URL formatada do WhatsApp com codificação segura de caracteres especiais
+     * (Regra de robustez levantada no teste de aceite por William Teodoro)
+     */
+    public function generateWhatsAppUrl(string $whatsappNumber, string $message): string
+    {
+        $cleanPhone = preg_replace('/\D+/', '', $whatsappNumber);
+
+        return 'https://wa.me/' . $cleanPhone . '?text=' . urlencode($message);
     }
 }

@@ -126,4 +126,54 @@ final class StoreBusinessRulesTest extends CIUnitTestCase
         $this->assertTrue($api->isValidCashChange(10.00, $totalAmount, 'PIX'));
         $this->assertTrue($api->isValidCashChange(10.00, $totalAmount, 'Cartão'));
     }
+
+    /**
+     * Testa formatação e codificação da URL do WhatsApp com caracteres especiais nas observações
+     * (Regra de robustez levantada no teste de aceite por William Teodoro)
+     */
+    public function testWhatsAppUrlEncodingWithSpecialCharactersInNotes(): void
+    {
+        $api = new Api();
+
+        $items = [
+            [
+                'name'     => 'Cupcake Red Velvet',
+                'quantity' => 2,
+                'price'    => 12.00,
+                'notes'    => 'Sem calda & caprichar no recheio #aniversário + recado: "Parabéns & Sucesso!"',
+                'options'  => [
+                    ['name' => 'Brigadeiro Gourmet', 'price' => 3.50]
+                ]
+            ]
+        ];
+
+        $message = $api->formatWhatsAppMessage(
+            'Cupcake Store',
+            105,
+            'William Teodoro',
+            '(18) 99123-4567',
+            'Rua das Palmeiras',
+            '250',
+            'Centro',
+            'Araçatuba',
+            '16010-000',
+            'Apto 12',
+            'PIX',
+            null,
+            $items,
+            31.00
+        );
+
+        // A mensagem em texto plano deve conter os caracteres da observação
+        $this->assertStringContainsString('Sem calda & caprichar no recheio #aniversário + recado: "Parabéns & Sucesso!"', $message);
+
+        // A geração da URL com urlencode deve tratar & e # impedindo quebra na query string
+        $url = $api->generateWhatsAppUrl('5518991234567', $message);
+
+        $this->assertStringStartsWith('https://wa.me/5518991234567?text=', $url);
+        // Não pode conter '& caprichar' direto na URL da query string (deve ser codificado como %26)
+        $this->assertStringNotContainsString('& caprichar', $url);
+        $this->assertStringContainsString('%26', $url);
+        $this->assertStringContainsString('%23', $url); // '#' codificado como %23
+    }
 }
