@@ -16,29 +16,29 @@ usecaseDiagram
 ```mermaid
 flowchart TD
     subgraph Atores
-        Cliente(["👤 Cliente / Consumidor"])
-        Admin(["👨‍💼 Administrador / Lojista"])
-        ViaCEP[("🌐 API Externa ViaCEP")]
-        WhatsApp[("📱 API Externa WhatsApp")]
+        Cliente["👤 Cliente / Consumidor"]
+        Admin["👨‍💼 Administrador / Lojista"]
+        ViaCEP["🌐 API Externa ViaCEP"]
+        WhatsApp["📱 API Externa WhatsApp"]
     end
 
     subgraph "Casos de Uso - Área Pública do Cliente"
-        UC01([UC01: Visualizar Cardápio por Categoria])
-        UC02([UC02: Personalizar Produto com Opcionais & Observações])
-        UC03([UC03: Gerenciar Sacola de Compras com Reversibilidade])
-        UC04([UC04: Consultar Endereço por CEP])
-        UC05([UC05: Validar Horário Comercial da Loja])
-        UC06([UC06: Selecionar Pagamento e Validar Troco em Dinheiro])
-        UC07([UC07: Fechar Pedido e Redirecionar ao WhatsApp])
+        UC01(["UC01: Visualizar Cardápio por Categoria"])
+        UC02(["UC02: Personalizar Produto com Opcionais e Observações"])
+        UC03(["UC03: Gerenciar Sacola com Reversibilidade IHC"])
+        UC04(["UC04: Consultar Endereço por CEP"])
+        UC05(["UC05: Validar Horário Comercial da Loja"])
+        UC06(["UC06: Selecionar Pagamento e Validar Troco"])
+        UC07(["UC07: Fechar Pedido e Redirecionar ao WhatsApp"])
     end
 
-    subgraph "Casos de Uso - Área Administrativa & Instalação"
-        UC08([UC08: Executar Wizard Dinâmico de Instalação])
-        UC09([UC09: Autenticar Administrador])
-        UC10([UC10: Analisar Métricas de Popularidade / Gráfico Chart.js])
-        UC11([UC11: Gerenciar Categorias CRUD])
-        UC12([UC12: Gerenciar Produtos e Opcionais CRUD])
-        UC13([UC13: Parametrizar White-Label Cor, Nicho, Horários])
+    subgraph "Casos de Uso - Área Administrativa e Instalação"
+        UC08(["UC08: Executar Wizard Dinâmico de Instalação"])
+        UC09(["UC09: Autenticar Administrador"])
+        UC10(["UC10: Analisar Métricas e Gráfico Chart.js"])
+        UC11(["UC11: Gerenciar Categorias CRUD"])
+        UC12(["UC12: Gerenciar Produtos e Opcionais CRUD"])
+        UC13(["UC13: Parametrizar White-Label Cor e Horários"])
     end
 
     %% Relacionamentos do Cliente
@@ -48,12 +48,12 @@ flowchart TD
     Cliente --> UC06
     Cliente --> UC07
 
-    UC02 -.->|<<extend>>| UC01
-    UC07 -.->|<<include>>| UC05
-    UC07 -.->|<<include>>| UC06
-    UC06 -.->|<<include>>| UC04
+    UC02 -.->|extend| UC01
+    UC07 -.->|include| UC05
+    UC07 -.->|include| UC06
+    UC06 -.->|include| UC04
 
-    UC04 <--> ViaCEP
+    UC04 --- ViaCEP
     UC07 --> WhatsApp
 
     %% Relacionamentos do Administrador
@@ -246,7 +246,7 @@ flowchart TD
     SelectPayment --> IsCash{Pagamento em Dinheiro?}
     
     IsCash -- Sim --> InputChange[Digita valor para troco]
-    InputChange --> ValidateChange{Troco >= Total?}
+    InputChange --> ValidateChange{"Troco maior ou igual ao Total?"}
     ValidateChange -- Não --> ChangeAlert[Exibe aviso em vermelho e bloqueia envio]
     ChangeAlert --> InputChange
     ValidateChange -- Sim --> ShowGreenFeedback[Calcula troco a devolver e exibe em verde]
